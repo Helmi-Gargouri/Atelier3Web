@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des auteurs</title>
+</head>
+<body>
+    <h1>Liste des auteurs</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Image</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Nombre de livres</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% if authors is empty or authors is not defined %}
+            le tableau n’est pas défini et/ou vide.
+        {% endif %}
+            {% for author in authors %}
+                <tr>
+                    <td>{{ author.id }}</td>
+                    <td><img src="{{ asset(author.picture) }}" alt="{{ author.username }}" width="100"></td>
+                    <td>{{ author.username|upper }}</td>
+                    <td>{{ author.email }}</td>
+                    <td>{{ author.nb_books }}</td>
+                    <td><a href="authorDetails/{{author.id}}" >Details</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <p> le nombre des auteurs : {{authors|length()}}<p>
+    {% set total = 0 %}
+    {% for author in authors %}
+         {%set total = total+ author.nb_books%} 
+    {% endfor %}
+    <p> le nombre total des livres de tous les auteurs :{{total}} <p>
+
+</body>
+</html>

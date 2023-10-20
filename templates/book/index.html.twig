@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello BookController!{% endblock %}
+
+{% block body %}
+
+{% set nbpublished =0 %}
+{% set nbnot =0 %}
+{% if books is empty %}
+ no books found 
+  {% else %}
+            <table>
+        <tr>
+            <th>Title</th>
+            <th>Category</th>
+            <th>Date de publication</th>
+            <th>Author</th>
+            <th>Published</th>
+                <th>Actions</th>
+        </tr>
+
+        {% for b in books %}
+        {% if b.published == true %}
+        {% set nbpublished = nbpublished +1 %}
+            <tr>
+                <td>{{ b.title }}</td>
+                <td>{{b.category}}</td>
+                <td>{{b.publicationDate|date}}</td>
+                <td>{{b.author.username}}</td>
+                <td>{{b.published}}</td>
+                <td><a href={{path('app_book_update',{'ref':b.ref})}}>Update</a></td>
+                <td><a href={{path('app_book_delete',{'ref':b.ref})}}>Delete</a></td>
+            </tr>
+            {% else %}
+            {%set nbnot = nbnot+1 %}
+     {% endif %}
+
+    {% endfor %}
+   </table>
+    {% endif %}
+    nb of books published is :
+    {{ nbpublished}}
+    nb of books inpublished :
+    {{nbnot}}
+{% endblock %}
